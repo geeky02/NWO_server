@@ -43,6 +43,7 @@ app.post("/swap", async (req, res) => {
         }
 
         const { amount, code1, code2, issuer2, userToken} = req.body;
+        console.log('usertoken', userToken);
         const userAddress = "rMbRN65DKDaCNKpnMPVPoUZ9eJJfvLup8r";
         console.log(amount);
 
@@ -71,29 +72,34 @@ app.post("/swap", async (req, res) => {
         }
         // ✅ Create a Xumm payload to request user confirmation
        
-        const payload = await xumm.payload.create(
-            {
-                txjson: txJson,
-                options: {
-                    submit: false,
-                    expire: 300,
-                    push: true,
-                    force_push: true,
-                }
-            },
-            userToken // ✅ critical for Xaman push
-        );
+ const payload = await xumm.payload.create(
+      {
+        txjson: txJson,
+        options: {
+          submit: false,
+          expire: 300,
+          push: true,
+          force_push: true,
+          return_url: {
+            app: "https://your-app.com/success",
+            web: "https://your-app.com/success?id={id}"
+          },
+          force_network: "MAINNET"
+        },
+        custom_meta: {
+          identifier: "swap-tx",
+          instruction: `Please sign to swap ${amount} ${code1}`
+        }
+      },
+      { user_token: userToken }
+    );
 
-        
-        console.log('force');
-        console.log(payload);
-
-        // ✅ Return the payload UUID so the frontend can handle the transaction confirmation
-        res.json({
-            message: "Sign request sent to Xumm",
-            xummPayload: payload,
-        });
-
+    console.log("✅ PUSHED:", payload.pushed);
+    res.json({
+      message: "Sign request sent to Xumm",
+      pushed: payload.pushed,
+      xummPayload: payload
+    });
     } catch (error) {
         console.error("Swap Error:", error);
         res.status(500).json({ error: "Swap failed", details: error.message });
