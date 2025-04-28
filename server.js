@@ -129,11 +129,11 @@ function isMeteoraPoolEvent(event) {
 
 function extractTransactionInfo(event) {
     try {
-        const { timestamp, description, nativeTransfers } = event;
+        const { timestamp, description, nativeTransfers, tokenTransfers } = event;
         const wallet = nativeTransfers[0]?.fromUserAccount || 'unknown';
-        const solAmount = nativeTransfers.find((t) => t.mint === 'So11111111111111111111111111111111111111112')?.amount || 0;
-        const usdcAmount = nativeTransfers.find((t) => t.mint.includes('USDC'))?.amount || 0;
-        const buySell = solAmount > 0 ? 'Sell' : 'Buy';
+        const solAmount = tokenTransfers.find((t) => t.mint === 'So11111111111111111111111111111111111111112')?.tokenAmount || 0;
+        const usdcAmount = description.split(" ")[2] || 0;
+        const buySell = Number(solAmount) > 0 ? 'Sell' : 'Buy';
         return { timestamp, wallet, buySell, solAmount, usdcAmount };
     } catch (e) {
         console.error('Failed to parse txn info', e);
