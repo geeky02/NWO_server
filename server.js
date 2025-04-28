@@ -132,7 +132,7 @@ function extractTransactionInfo(event) {
         const { timestamp, description, nativeTransfers, tokenTransfers } = event;
         const wallet = nativeTransfers[0]?.fromUserAccount || 'unknown';
         const solAmount = tokenTransfers.find((t) => t.mint === 'So11111111111111111111111111111111111111112')?.tokenAmount || 0;
-        const usdcAmount = description.split(" ")[3] === 'USDC' ? description.split(" ")[2] || 0;
+        const usdcAmount = description.split(" ")[3] === 'USDC' ? description.split(" ")[2] : 0;
         const buySell = Number(solAmount) > 0 ? 'Sell' : 'Buy';
         return { timestamp, wallet, buySell, solAmount, usdcAmount };
     } catch (e) {
