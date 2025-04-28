@@ -78,7 +78,7 @@ app.get("/api/xumm/verifysignature", (req, res) => {
     }
 });
 
-app.get("/api/helius-webhook", async (req, res) => {
+app.post("/api/helius-webhook", async (req, res) => {
     const pusher = new Pusher({
         appId: process.env.PUSHER_APP_ID,
         key: process.env.NEXT_PUBLIC_PUSHER_KEY,
