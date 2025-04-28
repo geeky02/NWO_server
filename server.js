@@ -93,7 +93,7 @@ app.post("/api/helius-webhook", async (req, res) => {
         const events = req.body;
 
         for (const event of events) {
-            console.log("event", event.accountData, isMeteoraPoolEvent(event))
+            console.log("event", event, isMeteoraPoolEvent(event))
             if (isMeteoraPoolEvent(event)) {
                 const txnInfo = extractTransactionInfo(event);
                 if (txnInfo) {
