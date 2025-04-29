@@ -135,7 +135,7 @@ function extractTransactionInfo(event) {
         const solAmount = tokenTransfers.find((t) => t.mint === 'So11111111111111111111111111111111111111112')?.tokenAmount || 0;
         const usdcAmount = tokenTransfers.find((t) => METEORA_POOL_ADDRESSES.has(t.toTokenAccount))?.tokenAmount || 0;
         const buySell = Number(solAmount) > 0 ? 'Sell' : 'Buy';
-        if (usdcAmount) {
+        if (Number(usdcAmount)) {
             return { timestamp, wallet, buySell, solAmount, usdcAmount };
         } else {
             return null;
