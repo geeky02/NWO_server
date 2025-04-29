@@ -127,10 +127,9 @@ function isMeteoraPoolEvent(event) {
 
 function extractTransactionInfo(event) {
     try {
-        const { timestamp, description, nativeTransfers, tokenTransfers, accountData } = event;
-        const tokenBalanceChange = accountData.find((t) => METEORA_POOL_ADDRESSES.has(t.account)).tokenBalanceChanges;
+        const { timestamp, description, nativeTransfers, tokenTransfers, accountData, description } = event;
 
-        console.log("==================>", tokenBalanceChange)
+        console.log("description", description)
         
         const wallet = nativeTransfers[0]?.fromUserAccount || 'unknown';
         const solAmount = tokenTransfers.find((t) => t.mint === 'So11111111111111111111111111111111111111112')?.tokenAmount || 0;
