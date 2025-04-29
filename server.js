@@ -127,7 +127,7 @@ function isMeteoraPoolEvent(event) {
 
 function extractTransactionInfo(event) {
     try {
-        const { timestamp, description, nativeTransfers, tokenTransfers, accountData, description } = event;
+        const { timestamp, description, nativeTransfers, tokenTransfers, accountData } = event;
 
         console.log("description", description)
         
