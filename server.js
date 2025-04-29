@@ -87,13 +87,10 @@ app.post("/api/helius-webhook", async (req, res) => {
         useTLS: true,
     });
 
-    await pusher.trigger('transactions', 'new-transaction', { timestamp: "webhook triggered pusher" });
-
     if (req.method === 'POST') {
         const events = req.body;
 
         for (const event of events) {
-            console.log("event", event, isMeteoraPoolEvent(event))
             if (isMeteoraPoolEvent(event)) {
                 const txnInfo = extractTransactionInfo(event);
                 if (txnInfo) {
@@ -129,7 +126,11 @@ function isMeteoraPoolEvent(event) {
 
 function extractTransactionInfo(event) {
     try {
-        const { timestamp, description, nativeTransfers, tokenTransfers } = event;
+        const { timestamp, description, nativeTransfers, tokenTransfers, accountData } = event;
+        const tokenBalanceChange = acccountData.find((t) => METEORA_POOL_ADDRESSES.has(t.account)).tokenBalanceChanges;
+
+        console.log("==================>", tokenBalanceChange)
+        
         const wallet = nativeTransfers[0]?.fromUserAccount || 'unknown';
         const solAmount = tokenTransfers.find((t) => t.mint === 'So11111111111111111111111111111111111111112')?.tokenAmount || 0;
         const usdcAmount = description.split(" ")[3] === 'USDC' ? description.split(" ")[2] : 0;
