@@ -19,6 +19,14 @@ const xumm = new XummSdk(
     process.env.XUMM_KEY_SECRET
 );
 
+const METEORA_POOL_ADDRESSES = new Set([
+    '32D4zRxNc1EssbJieVHfPhZM3rH6CzfUPrWUuWxD9prG',
+    'FGFaiYjXTVuLsKvzn6ueckraNTeqUGHeYqrQPQCpd7kH',
+    'FGFaiYjXTVuLsKvzn6ueckraNTeqUGHeYqrQPQCpd7kH',
+    '32D4zRxNc1EssbJieVHfPhZM3rH6CzfUPrWUuWxD9prG',
+    '32D4zRxNc1EssbJieVHfPhZM3rH6CzfUPrWUuWxD9prG',
+])
+
 app.post("/api/xumm/createpayload", async (req, res) => {
     try {
         const signInPayload = {
@@ -112,13 +120,6 @@ app.listen(PORT, () => {
 });
 
 function isMeteoraPoolEvent(event) {
-    const METEORA_POOL_ADDRESSES = new Set([
-        '32D4zRxNc1EssbJieVHfPhZM3rH6CzfUPrWUuWxD9prG',
-        'FGFaiYjXTVuLsKvzn6ueckraNTeqUGHeYqrQPQCpd7kH',
-        'FGFaiYjXTVuLsKvzn6ueckraNTeqUGHeYqrQPQCpd7kH',
-        '32D4zRxNc1EssbJieVHfPhZM3rH6CzfUPrWUuWxD9prG',
-        '32D4zRxNc1EssbJieVHfPhZM3rH6CzfUPrWUuWxD9prG',
-    ])
     const accountKeys = event?.accountData || [];
 
     return accountKeys.some((acc) => METEORA_POOL_ADDRESSES.has(acc.account));
