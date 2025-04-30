@@ -20,11 +20,11 @@ const xumm = new XummSdk(
 );
 
 const METEORA_POOL_ADDRESSES = new Set([
-    '32D4zRxNc1EssbJieVHfPhZM3rH6CzfUPrWUuWxD9prG',
-    'FGFaiYjXTVuLsKvzn6ueckraNTeqUGHeYqrQPQCpd7kH',
-    'FGFaiYjXTVuLsKvzn6ueckraNTeqUGHeYqrQPQCpd7kH',
-    '32D4zRxNc1EssbJieVHfPhZM3rH6CzfUPrWUuWxD9prG',
-    '32D4zRxNc1EssbJieVHfPhZM3rH6CzfUPrWUuWxD9prG',
+    '5rCf1DM8LjKTw4YqhnoLcngyZYeNnQqztScTogYHAS6',
+    'BGm1tav58oGcsQJehL9WXBFXF7D27vZsKefj4xJKD5Y',
+    'HTvjzsfX3yU6BUodCjZ5vZkUrAxMDTrBs3CJaq43ashR',
+    'BVRbyLjjfSBcoyiYFuxbgKYnWuiFaF9CSXEa5vdSZ9Hh',
+    '3msVd34R5KxonDzyNSV5nT19UtUeJ2RF1NaQhvVPNLxL',
 ])
 
 app.post("/api/xumm/createpayload", async (req, res) => {
